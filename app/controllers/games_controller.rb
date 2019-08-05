@@ -3,7 +3,7 @@ require 'json'
 
 class GamesController < ApplicationController
   def new
-    @letters = generate_grid(10)
+    @letters = 10.times.map { ('A'..'Z').to_a.sample }
   end
 
   def score
@@ -12,15 +12,6 @@ class GamesController < ApplicationController
   end
 
   private
-
-  def generate_grid(size)
-    chars = ('A'..'Z').to_a
-    letters = []
-    size.times do
-      letters << chars.sample
-    end
-    letters
-  end
 
   def follow_rule?(attempt, grid)
     attempt.split("").each do |char|
