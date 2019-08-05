@@ -26,7 +26,7 @@ class GamesController < ApplicationController
   end
 
   def run_game(attempt, grid)
-    message = "You are not following the rule, one or more of the characters you used are not in the grid!"
+    message = "invalid letters"
     return { score: 0, message: message } unless follow_rule?(attempt.upcase, grid)
 
 
@@ -34,8 +34,8 @@ class GamesController < ApplicationController
     json_file = open(url).read
     result = JSON.parse(json_file) # result is a hash
 
-    score = result["found"] ? 100 * attempt.length : 0
-    message = result["found"] ? "Well done!!!" : "Your answer is not an english word, you don't receive any point."
+    score = result["found"] ? (10 * attempt.length)**2 : 0
+    message = result["found"] ? "valid" : "invalid word"
     return { score: score, message: message }
   end
 end

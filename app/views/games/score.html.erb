@@ -1,4 +1,21 @@
-<h1>Result</h1>
-<h3><%= @info[:message] %></h3>
-<h5>Your score: <%= @info[:score] %></h5>
-<%= link_to "Play again?", new_path %>
+<div class="container">
+  <h1>Result</h1>
+
+  <% if @info[:message] == 'invalid letters' %>
+    <h3>Sorry but <strong><%= params[:word] %></strong> can't be buil out of <%= @grid %></h3>
+  <% elsif @info[:message] == 'invalid word' %>
+    <h3>Sorry but <strong><%= params[:word] %></strong> does not seem to be a valid English word... </h3>
+  <% elsif @info[:message] == 'valid' %>
+    <h3><strong>Congratulations!</strong> <%= params[:word] %> is a valid English word!</h3>
+    <% if session[:score] %>
+      <% session[:score] += @info[:score] %>
+    <% else %>
+      <% session[:score] = @info[:score] %>
+    <% end %>
+  <% end %>
+
+  <p class="score">Your score: <%= session[:score] %></p>
+
+  <%= link_to "Play again?", new_path %>
+</div>
+
